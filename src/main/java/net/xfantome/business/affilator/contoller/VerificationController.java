@@ -26,5 +26,30 @@ public class VerificationController {
             return ResponseEntity.badRequest().body("Invalid verification token. Please try again.");
         }
     }
+    
+    //i havent tested this code i hope it provides you with a general idea to set password 
+    @GetMapping("/password-setup")
+    public ResponseEntity<String> getPasswordSetupPage(@RequestParam("token") String token) {
+        Optional<Affilator> affilator = affilatorRepository.findByVerificationToken(token);
+        if (affilator.isPresent()) {
+            return ResponseEntity.ok("Password setup page");
+        }
+        return ResponseEntity.badRequest().body("Invalid verification token.");
+    }
+
+    @PostMapping("/password-setup")
+    public ResponseEntity<String> setPassword(@RequestParam("token") String token, @RequestParam("password") String password) {
+        Optional<Affilator> affilator = affilatorRepository.findByVerificationToken(token);
+        if (affilator.isPresent()) {
+            Affilator user = affilator.get();
+            if (user.getPassword() != null) {
+                return ResponseEntity.badRequest().body("Password is already set.");
+            }
+            // call setPassword(String userId, String password) method
+            affilatorService.setPassword(affilator,getId(), password);
+            return ResponseEntity.ok("Password set successfully.");
+        }
+        return ResponseEntity.badRequest().body("Invalid verification token.");
+    }
 }
 
