@@ -1,0 +1,50 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  profiles:
+    active: postgres
+  mail:
+    default-encoding: UTF-8
+    host: mail31.lwspanel.com
+    port: 587
+    username: web@xfantome.net
+    password: 27c8f7165!A554
+    from: web@xfantome.net
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            protocols: "TLSv1.2"
+    test-connection: true
+  datasource:
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/affilator
+springdoc:
+  swagger-ui:
+    path: /api.html
+  api-docs:
+    path: /docs
+server:
+  servlet:
+    context-path: /api
+  port: '8097'
+
+app:
+  password-setup-url: http://localhost:8097/api/password-setup
+
+
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+

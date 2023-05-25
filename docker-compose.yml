@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  app:
+    image: my-spring-boot:1.1
+    ports:
+      - '8096:8096'
+    depends_on:
+      - databaseno
+
+  database:
+    image: postgis/postgis
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=admin'
+      - 'POSTGRES_DB=affilator'
+
+
+
